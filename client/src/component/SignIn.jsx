@@ -22,34 +22,29 @@ export default function SignIn() {
             [name]: value,
         }));
     };
-
-    const handleAddEmployee = () => {
-        alert("Add Employee functionality to be implemented.");
-    };
-
+    
     const handleclicksignin = async () => {
         console.log("Login form submitted:", formData);
+    
         try {
-            const response = await axios.post("http://localhost:3000/api/login", {
+            const response = await axios.post(`${import.meta.env.VITE_API_HOST}/api/login`, {
                 email: formData.email,
                 password: formData.password,
             });
             console.log("Login successful:", response.data);
+    
             const data = response.data;
             if (response.status === 200) {
-                // Corrected cookie syntax and added SameSite and Secure settings
                 document.cookie = `username=${JSON.stringify(data)}; SameSite=Strict; Secure`;
-    
-                // Save user info to localStorage
                 localStorage.setItem("user", JSON.stringify(data));
+                window.location.href = "/dashboard";
             }
-            setFormData({ username: "", email: "" });
-            window.location.href = "/dashboard";
         } catch (error) {
             console.error("Error during login:", error);
             alert("An error occurred during login. Please try again.");
         }
     };
+    
 
     const handleLogout = () => {
         // Remove user session data (cookies and localStorage)
@@ -98,6 +93,7 @@ export default function SignIn() {
                     <TextField
                         name="password"
                         label="password"
+                        type = "password"
                         value={formData.password}
                         onChange={handleInputChange}
                         fullWidth

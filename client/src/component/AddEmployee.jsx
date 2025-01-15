@@ -70,7 +70,7 @@ export default function AddEmployee() {
         }
 
         try {
-            const response = await axios.post("http://localhost:3000/api/addemployeedata", {
+            const response = await axios.post(`import.meta.env.VITE_API_HOST/api/addemployeedata`, {
                 id: userid,
                 empid: formData.employeeId,
                 name: formData.name,
